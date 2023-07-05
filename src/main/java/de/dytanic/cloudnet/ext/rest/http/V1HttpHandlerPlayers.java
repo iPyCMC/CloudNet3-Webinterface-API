@@ -20,11 +20,13 @@ public class V1HttpHandlerPlayers extends HttpHandler {
         super(permission);
     }
 
-    private final IPlayerManager playerManager = CloudNetDriver.getInstance().getServicesRegistry()
+    private IPlayerManager playerManager = CloudNetDriver.getInstance().getServicesRegistry()
             .getFirstService(IPlayerManager.class);
 
     @Override
     public void handleGet(String path, IHttpContext context) throws Exception {
+        if(playerManager == null) playerManager = CloudNetDriver.getInstance().getServicesRegistry()
+                .getFirstService(IPlayerManager.class);
         if (context.request().pathParameters().containsKey("user")) {
             context
                     .response()
